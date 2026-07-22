@@ -1,0 +1,31 @@
+.st-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.st-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 340px;
+  margin: 0 auto 2rem;
+}
+
+.st-pad {
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: var(--pad-color);
+  border: none;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+  min-height: auto;
+}
+
+.st-pad:disabled { cursor: default; }
+
+.st-status {
+  text-align: center;
+}

@@ -1,0 +1,29 @@
+.sb-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sb-choice {
+  text-align: left;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line);
+  background: var(--void);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.sb-choice:hover:not(:disabled) { border-color: var(--accent); }
+
+.sb-choice.picked-best { background: rgba(34, 211, 170, 0.15); border-color: var(--success); color: var(--success); }
+.sb-choice.picked-good { background: rgba(168, 85, 247, 0.15); border-color: var(--accent); color: var(--accent); }
+.sb-choice.picked-poor { background: rgba(244, 91, 105, 0.15); border-color: var(--danger); color: var(--danger); }
+
+.sb-choice.faded { opacity: 0.4; }
+
+.sb-outcome {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  max-width: 480px;
+}

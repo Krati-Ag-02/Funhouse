@@ -1,0 +1,112 @@
+/* Shared classes reused by every quiz-style game (options grid,
+   feedback states, toolbar). Keeps individual game stylesheets
+   limited to what's actually unique to that game. */
+
+.ec-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.ec-difficulty { display: flex; gap: 0.5rem; }
+
+.ec-diff-btn {
+  background: var(--void);
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  min-height: auto;
+}
+
+.ec-diff-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.ec-progress {
+  font-weight: 600;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+}
+
+.ec-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+
+.ec-option {
+  background: var(--void);
+  border: 1px solid var(--line);
+  color: var(--text-bright);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  font-size: 0.95rem;
+  text-align: left;
+  min-height: auto;
+}
+
+.ec-option:hover:not(:disabled) { border-color: var(--accent); }
+
+.ec-option.correct {
+  background: rgba(34, 211, 170, 0.15);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.ec-option.wrong {
+  background: rgba(244, 91, 105, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.ec-feedback-row {
+  margin-top: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ec-feedback { font-size: 0.95rem; font-weight: 600; margin: 0; }
+.ec-feedback.correct { color: var(--success); }
+.ec-feedback.wrong { color: var(--danger); }
+
+.ec-results { text-align: center; padding: 1.5rem 0; }
+.ec-results h2 { font-size: var(--fs-xl); margin-bottom: 0.6rem; }
+
+.st-instructions {
+  margin: 0;
+  color: var(--text-dim);
+  max-width: 420px;
+  font-size: 0.92rem;
+}
+
+.ec-emoji-display {
+  text-align: center;
+  font-size: clamp(3rem, 10vw, 5rem);
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem 1rem;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.15em;
+}
+
+.statement-panel {
+  text-align: left;
+  font-size: clamp(1.05rem, 3vw, 1.3rem);
+  font-weight: 500;
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.75rem;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  line-height: 1.55;
+}

@@ -1,0 +1,27 @@
+.wl-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wl-chip {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.wl-chip.solved {
+  background: rgba(34, 211, 170, 0.15);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.wl-chip.target {
+  background: var(--void);
+  border-color: var(--accent);
+  color: var(--accent);
+  opacity: 0.85;
+}
