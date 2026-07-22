@@ -1,11 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth'
-import { auth, googleProvider, isFirebaseConfigured } from './firebase.js'
+import { 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut as firebaseSignOut, 
+  onAuthStateChanged 
+} from 'firebase/auth'
+import { auth, isFirebaseConfigured } from './firebase.js'
 
 const AuthContext = createContext({
   user: null,
   loading: false,
   firebaseReady: false,
+  signUp: async () => {},
   signIn: async () => {},
   signOut: async () => {},
 })
@@ -23,18 +29,26 @@ export function AuthProvider({ children }) {
     return unsubscribe
   }, [])
 
-  async function signIn() {
+  // Create a new account
+  async function signUp(email, password) {
     if (!isFirebaseConfigured) return
-    await signInWithPopup(auth, googleProvider)
+    return await createUserWithEmailAndPassword(auth, email, password)
   }
 
+  // Log in existing user
+  async function signIn(email, password) {
+    if (!isFirebaseConfigured) return
+    return await signInWithEmailAndPassword(auth, email, password)
+  }
+
+  // Log out
   async function signOut() {
     if (!isFirebaseConfigured) return
-    await firebaseSignOut(auth)
+    return await firebaseSignOut(auth)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, firebaseReady: isFirebaseConfigured, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, firebaseReady: isFirebaseConfigured, signUp, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

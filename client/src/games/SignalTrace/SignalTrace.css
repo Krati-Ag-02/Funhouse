@@ -7,25 +7,38 @@
   margin-bottom: 2rem;
 }
 
+.st-sky {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto 2rem;
+  padding: 1.75rem;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 30%, #1A1533 0%, #0D0A1A 75%);
+  border: 1px solid var(--line);
+}
+
 .st-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  max-width: 340px;
-  margin: 0 auto 2rem;
+  gap: 1.1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .st-pad {
   aspect-ratio: 1;
-  border-radius: var(--radius);
-  background: var(--pad-color);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--pad-color) 55%, transparent 78%);
   border: none;
-  transition: opacity 0.15s ease, box-shadow 0.15s ease;
   min-height: auto;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .st-pad:disabled { cursor: default; }
+.st-pad:not(:disabled):hover { transform: scale(1.05); }
 
 .st-status {
   text-align: center;
+  position: relative;
 }

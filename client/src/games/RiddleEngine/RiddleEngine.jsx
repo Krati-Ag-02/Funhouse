@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { getRiddleRound } from '../../services/aiClient.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
+import './RiddleEngine.css'
 
 const GAME_ID = 'riddle-engine'
 const ROUNDS_PER_GAME = 6
@@ -65,7 +67,8 @@ export default function RiddleEngine() {
             <div className="ec-progress">Round {roundNum} of {ROUNDS_PER_GAME} · Score {score}</div>
           </div>
 
-          <div className="ec-emoji-display" style={{ fontSize: 'var(--fs-lg)', letterSpacing: 'normal', textAlign: 'left', padding: '2rem' }}>
+          <div className="rd-scroll">
+            <span className="rd-riddle-label">a riddle unfurls</span>
             {round.riddle}
           </div>
 
@@ -97,6 +100,7 @@ export default function RiddleEngine() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={resetGame}>Play again</button>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { getEmojiRound } from '../../services/aiClient.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
+import './EmojiCharades.css'
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard']
 const GAME_ID = 'emoji-charades'
@@ -13,9 +15,9 @@ export default function EmojiCharades() {
   const { user } = useAuth()
   const [difficulty, setDifficulty] = useState('Easy')
   const [round, setRound] = useState(null)
-  const [history, setHistory] = useState([]) // answers already seen this session
+  const [history, setHistory] = useState([])
   const [selected, setSelected] = useState(null)
-  const [feedback, setFeedback] = useState(null) // 'correct' | 'wrong' | null
+  const [feedback, setFeedback] = useState(null)
   const [score, setScore] = useState(0)
   const [roundNum, setRoundNum] = useState(1)
   const [best, setBest] = useState(getBestScore(GAME_ID))
@@ -47,7 +49,7 @@ export default function EmojiCharades() {
   }
 
   function handleAnswer(option) {
-    if (feedback) return // already answered this round
+    if (feedback) return
     const isCorrect = option === round.answer
     setSelected(option)
     setFeedback(isCorrect ? 'correct' : 'wrong')
@@ -60,7 +62,7 @@ export default function EmojiCharades() {
 
     if (roundNum >= ROUNDS_PER_GAME) {
       setGameOver(true)
-      const result = await saveScore(GAME_ID, score + (feedback === 'correct' ? 0 : 0), user)
+      const result = await saveScore(GAME_ID, score, user)
       setBest(result.best)
       return
     }
@@ -92,8 +94,8 @@ export default function EmojiCharades() {
           </div>
 
           <span className="label-mono">{round.source === 'groq' ? 'live round' : 'archive round'}</span>
-          <div className="ec-emoji-display" aria-label={`Emoji clue: ${round.emojis}`}>
-            {round.emojis}
+          <div className="em-orb" aria-label={`Emoji clue: ${round.emojis}`}>
+            <span>{round.emojis}</span>
           </div>
 
           <div className="ec-options">
@@ -129,6 +131,7 @@ export default function EmojiCharades() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best on {difficulty}: {best}</p>
           <button className="btn-primary" onClick={() => resetGame(difficulty)}>Play again</button>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { getTriviaRound } from '../../services/aiClient.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
+import './ReverseTrivia.css'
 
 const GAME_ID = 'reverse-trivia'
 const ROUNDS_PER_GAME = 6
@@ -68,14 +70,12 @@ export default function ReverseTrivia() {
       {!gameOver && (
         <>
           <div className="ec-toolbar">
-            <span className="ec-diff-btn active" style={{ borderRadius: 999 }}>{round.category}</span>
+            <span className="ec-diff-btn active rt-category">{round.category}</span>
             <div className="ec-progress">Round {roundNum} of {ROUNDS_PER_GAME} · Score {score}</div>
           </div>
 
           <span className="label-mono">{round.source === 'groq' ? 'live round' : 'archive round'}</span>
-          <div className="ec-emoji-display" style={{ fontSize: 'var(--fs-xl)', letterSpacing: 'normal' }}>
-            {round.answerShown}
-          </div>
+          <div className="rt-screen">{round.answerShown}</div>
 
           <div className="ec-options">
             {round.options.map((opt) => {
@@ -105,6 +105,7 @@ export default function ReverseTrivia() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={resetGame}>Play again</button>

@@ -5,25 +5,32 @@
 }
 
 .sb-choice {
+  position: relative;
   text-align: left;
-  padding: 1rem 1.2rem;
+  padding: 1rem 1.4rem;
   border: 1px solid var(--line);
-  background: var(--void);
+  background: linear-gradient(100deg, var(--void) 96%, rgba(214,162,76,0.15) 100%);
   font-size: 0.95rem;
   font-weight: 500;
+  border-radius: 4px 10px 10px 4px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
 }
 
-.sb-choice:hover:not(:disabled) { border-color: var(--accent); }
+.sb-choice:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
 
-.sb-choice.picked-best { background: rgba(34, 211, 170, 0.15); border-color: var(--success); color: var(--success); }
-.sb-choice.picked-good { background: rgba(168, 85, 247, 0.15); border-color: var(--accent); color: var(--accent); }
-.sb-choice.picked-poor { background: rgba(244, 91, 105, 0.15); border-color: var(--danger); color: var(--danger); }
+.sb-choice.picked-best { background: rgba(63, 169, 138, 0.16); border-color: var(--success); color: var(--success); }
+.sb-choice.picked-good { background: rgba(143, 121, 201, 0.16); border-color: var(--accent); color: var(--accent); }
+.sb-choice.picked-poor { background: rgba(201, 103, 138, 0.16); border-color: var(--danger); color: var(--danger); }
 
 .sb-choice.faded { opacity: 0.4; }
 
 .sb-outcome {
   margin: 0;
   color: var(--text-dim);
-  font-size: 0.95rem;
+  font-family: var(--font-script);
+  font-size: 1.05rem;
   max-width: 480px;
 }

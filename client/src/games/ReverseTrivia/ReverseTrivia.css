@@ -1,0 +1,30 @@
+.rt-category {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, var(--gold), #B37F35) !important;
+  color: #3A2A0E !important;
+  border: none !important;
+}
+
+.rt-screen {
+  position: relative;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  padding: 2.25rem 1rem;
+  margin-bottom: 1.75rem;
+  background: radial-gradient(ellipse at 50% -20%, rgba(214, 162, 76, 0.18), transparent 65%), var(--void);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.rt-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 4px);
+  pointer-events: none;
+}

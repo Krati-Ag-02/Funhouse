@@ -1,0 +1,50 @@
+.mo-stage {
+  background: linear-gradient(180deg, rgba(201, 103, 138, 0.1), transparent 60%), var(--void);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+  font-size: clamp(1.05rem, 3vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.mo-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.25rem;
+}
+
+.mo-mask {
+  position: relative;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 50% 50% 46% 46%;
+  padding-top: 2.4rem;
+  text-align: center;
+  font-size: 2.5rem;
+  min-height: auto;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mo-mask::before {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  width: 2px;
+  height: 14px;
+  background: var(--line-strong);
+  transform: translateX(-50%);
+}
+
+.mo-mask:hover:not(:disabled) { transform: translateY(-4px) rotate(-3deg); }
+
+.mo-mask.correct {
+  background: rgba(63, 169, 138, 0.16);
+  border-color: var(--success);
+}
+.mo-mask.wrong {
+  background: rgba(201, 103, 138, 0.16);
+  border-color: var(--danger);
+}

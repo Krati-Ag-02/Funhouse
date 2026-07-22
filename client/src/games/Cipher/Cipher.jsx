@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { buildRound } from './data.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
@@ -117,6 +118,7 @@ export default function Cipher() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>FINAL SCORE: {score} / {ROUNDS_PER_GAME}</h2>
           <p>BEST ON {difficulty.toUpperCase()}: {best}</p>
           <button className="btn-primary" onClick={() => resetGame(difficulty)}>RUN AGAIN</button>

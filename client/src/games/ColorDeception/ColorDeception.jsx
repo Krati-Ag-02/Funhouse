@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
@@ -8,18 +9,16 @@ import './ColorDeception.css'
 const GAME_ID = 'color-deception'
 const ROUNDS_PER_GAME = 10
 const COLORS = [
-  { name: 'Red', hex: '#E5484D' },
-  { name: 'Blue', hex: '#3B82F6' },
-  { name: 'Green', hex: '#2EC4B6' },
-  { name: 'Yellow', hex: '#FFC857' },
-  { name: 'Purple', hex: '#8B5CF6' },
+  { name: 'Red', hex: '#C9678A' },
+  { name: 'Blue', hex: '#5C87A8' },
+  { name: 'Green', hex: '#3FA98A' },
+  { name: 'Yellow', hex: '#D6A24C' },
+  { name: 'Purple', hex: '#8F79C9' },
 ]
 
 function randomRound() {
   const wordColor = COLORS[Math.floor(Math.random() * COLORS.length)]
   let inkColor = COLORS[Math.floor(Math.random() * COLORS.length)]
-  // Bias toward mismatched word/ink so the game has a point, but allow
-  // an occasional match to keep players from just ignoring the word.
   if (Math.random() > 0.15) {
     while (inkColor.name === wordColor.name) {
       inkColor = COLORS[Math.floor(Math.random() * COLORS.length)]
@@ -85,7 +84,7 @@ export default function ColorDeception() {
               <button
                 key={c.name}
                 className="cd-swatch"
-                style={{ background: c.hex }}
+                style={{ background: c.hex, borderTopColor: c.hex }}
                 onClick={() => handleAnswer(c.name)}
                 disabled={!!feedback}
                 aria-label={c.name}
@@ -103,6 +102,7 @@ export default function ColorDeception() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={resetGame}>Play again</button>

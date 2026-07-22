@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { getFactRound } from '../../services/aiClient.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
@@ -66,7 +67,9 @@ export default function FactOrFiction() {
             <div className="ec-progress">Round {roundNum} of {ROUNDS_PER_GAME} · Score {score}</div>
           </div>
 
-          <div className="statement-panel" style={{ textAlign: 'center' }}>{round.statement}</div>
+          <div className="ff-crystal">
+            <div className="statement-panel" style={{ textAlign: 'center' }}>{round.statement}</div>
+          </div>
 
           <div className="ff-options">
             <button
@@ -98,6 +101,7 @@ export default function FactOrFiction() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={resetGame}>Play again</button>

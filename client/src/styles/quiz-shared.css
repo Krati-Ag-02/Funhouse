@@ -29,9 +29,11 @@
 }
 
 .ec-progress {
+  font-family: var(--font-mono);
   font-weight: 600;
   color: var(--text-faint);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
 }
 
 .ec-options {
@@ -44,25 +46,43 @@
   background: var(--void);
   border: 1px solid var(--line);
   color: var(--text-bright);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1rem 1.2rem;
   font-size: 0.95rem;
   text-align: left;
   min-height: auto;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, background 0.2s ease;
 }
 
-.ec-option:hover:not(:disabled) { border-color: var(--accent); }
+.ec-option:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
 
 .ec-option.correct {
-  background: rgba(34, 211, 170, 0.15);
+  background: rgba(63, 169, 138, 0.16);
   border-color: var(--success);
   color: var(--success);
+  animation: popCorrect 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .ec-option.wrong {
-  background: rgba(244, 91, 105, 0.15);
+  background: rgba(201, 103, 138, 0.16);
   border-color: var(--danger);
   color: var(--danger);
+  animation: shakeWrong 0.4s ease;
+}
+
+@keyframes popCorrect {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shakeWrong {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
 .ec-feedback-row {
@@ -72,14 +92,29 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
+  animation: riseIn 0.3s ease;
 }
 
-.ec-feedback { font-size: 0.95rem; font-weight: 600; margin: 0; }
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ec-feedback { font-size: 0.95rem; font-weight: 700; margin: 0; }
 .ec-feedback.correct { color: var(--success); }
 .ec-feedback.wrong { color: var(--danger); }
 
-.ec-results { text-align: center; padding: 1.5rem 0; }
-.ec-results h2 { font-size: var(--fs-xl); margin-bottom: 0.6rem; }
+.ec-results {
+  text-align: center;
+  padding: 1.75rem 0;
+  animation: riseIn 0.4s ease;
+}
+.ec-results h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  margin-bottom: 0.6rem;
+  color: var(--gold);
+}
 
 .st-instructions {
   margin: 0;

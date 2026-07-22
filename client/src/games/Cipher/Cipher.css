@@ -3,25 +3,52 @@
    src/styles/quiz-shared.css. */
 
 .c-readout {
-  background: var(--void);
+  position: relative;
+  background: #0D0B18;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 1.75rem 1.5rem;
-  margin-bottom: 1.75rem;
+  border-radius: 6px;
+  padding: 2rem 1.5rem 1.6rem;
+  margin-bottom: 1.9rem;
   text-align: center;
+  background-image: radial-gradient(circle, rgba(214, 162, 76, 0.35) 1px, transparent 1.4px);
+  background-size: 14px 14px;
+  background-position: 6px 6px;
 }
 
+.c-readout::before,
+.c-readout::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-image: radial-gradient(circle, var(--void) 3px, transparent 3.5px);
+  background-size: 16px 16px;
+  background-position: 4px 0;
+}
+.c-readout::before { top: -5px; }
+.c-readout::after { bottom: -5px; }
+
 .c-readout-label {
-  font-size: 0.75rem;
-  color: var(--text-faint);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+  animation: tickerFlicker 2.6s ease-in-out infinite;
+}
+
+@keyframes tickerFlicker {
+  0%, 92%, 100% { opacity: 1; }
+  94% { opacity: 0.55; }
+  96% { opacity: 1; }
 }
 
 .c-encoded {
   font-family: var(--font-mono);
-  font-size: clamp(1.2rem, 4vw, 1.7rem);
-  color: var(--accent);
-  letter-spacing: 0.08em;
+  font-size: clamp(1.15rem, 4vw, 1.6rem);
+  color: var(--gold);
+  letter-spacing: 0.1em;
   word-break: break-word;
+  text-shadow: 0 0 10px rgba(214, 162, 76, 0.35);
 }

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { getMoodRound } from '../../services/aiClient.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
+import './MoodMatch.css'
 
 const GAME_ID = 'mood-match'
 const ROUNDS_PER_GAME = 6
@@ -76,20 +78,17 @@ export default function MoodMatch() {
             <div className="ec-progress">Round {roundNum} of {ROUNDS_PER_GAME} · Score {score}</div>
           </div>
 
-          <div className="ec-emoji-display" style={{ fontSize: 'var(--fs-lg)', letterSpacing: 'normal', textAlign: 'left', padding: '2rem' }}>
-            {round.text}
-          </div>
+          <div className="mo-stage">{round.text}</div>
 
-          <div className="ec-options" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))' }}>
+          <div className="mo-options">
             {round.options.map((emoji) => {
-              let cls = 'ec-option'
+              let cls = 'mo-mask'
               if (feedback && emoji === round.best) cls += ' correct'
               else if (feedback && emoji === selected) cls += ' wrong'
               return (
                 <button
                   key={emoji}
                   className={cls}
-                  style={{ fontSize: '2.5rem', textAlign: 'center' }}
                   onClick={() => handleAnswer(emoji)}
                   disabled={!!feedback}
                   aria-label={`React with ${emoji}`}
@@ -115,6 +114,7 @@ export default function MoodMatch() {
 
       {gameOver && (
         <div className="ec-results">
+          <Confetti />
           <h2>Final score: {score} / {ROUNDS_PER_GAME}</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={resetGame}>Play again</button>

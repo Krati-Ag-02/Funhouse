@@ -1,24 +1,56 @@
 /* Only classes unique to Fact or Fiction — .statement-panel lives in
    src/styles/quiz-shared.css since Story Branch reuses it too. */
 
+.ff-crystal {
+  position: relative;
+}
+
+.ff-crystal::before {
+  content: '';
+  position: absolute;
+  inset: -14px -14px auto -14px;
+  height: 60%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(143, 121, 201, 0.25), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ff-crystal .statement-panel {
+  position: relative;
+  z-index: 1;
+  border-color: rgba(143, 121, 201, 0.3);
+}
+
 .ff-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
   max-width: 420px;
   margin: 0 auto;
 }
 
 .ff-choice {
-  padding: 1.1rem;
+  padding: 1.2rem;
+  font-family: var(--font-heading);
   font-size: 1rem;
-  letter-spacing: 0.04em;
-  border: 1px solid var(--line);
+  letter-spacing: 0.05em;
+  border-radius: 999px;
+  border: 2px dashed var(--line);
   background: var(--void);
 }
 
 .ff-choice.true:hover:not(:disabled) { border-color: var(--success); }
 .ff-choice.false:hover:not(:disabled) { border-color: var(--danger); }
 
-.ff-choice.correct { background: rgba(34, 211, 170, 0.15); border-color: var(--success); color: var(--success); }
-.ff-choice.wrong { background: rgba(244, 91, 105, 0.15); border-color: var(--danger); color: var(--danger); }
+.ff-choice.correct {
+  background: rgba(63, 169, 138, 0.16);
+  border: 2px solid var(--success);
+  border-style: solid;
+  color: var(--success);
+}
+.ff-choice.wrong {
+  background: rgba(201, 103, 138, 0.16);
+  border: 2px solid var(--danger);
+  border-style: solid;
+  color: var(--danger);
+}

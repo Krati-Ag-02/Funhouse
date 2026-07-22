@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { puzzles, buildOptions } from './data.js'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
@@ -26,6 +27,7 @@ export default function WordLadder() {
   const [best, setBest] = useState(getBestScore(GAME_ID))
   const [completedCount, setCompletedCount] = useState(0)
   const [seenStarts, setSeenStarts] = useState([])
+  const [celebrate, setCelebrate] = useState(0)
 
   useEffect(() => { newPuzzle([]) }, [])
 
@@ -50,7 +52,6 @@ export default function WordLadder() {
 
   async function handleNext() {
     if (feedback === 'wrong') {
-      // retry the same step with fresh decoys
       setOptions(buildOptions(puzzle.path, stepIndex))
       setSelected(null)
       setFeedback(null)
@@ -61,10 +62,10 @@ export default function WordLadder() {
     setSolvedChain(nextChain)
 
     if (stepIndex + 2 >= puzzle.path.length) {
-      // Puzzle solved
       const puzzleScore = Math.max(10, 100 - wrongCount * 10)
       const newTotal = completedCount + 1
       setCompletedCount(newTotal)
+      setCelebrate((c) => c + 1)
       const result = await saveScore(GAME_ID, puzzleScore, user)
       setBest(result.best)
 
@@ -85,6 +86,8 @@ export default function WordLadder() {
 
   return (
     <GameShell gameId="word-ladder" best={best}>
+      {celebrate > 0 && <Confetti key={celebrate} count={20} />}
+
       <div className="ec-toolbar">
         <p className="st-instructions">
           Change one letter at a time to climb from <strong>{puzzle.start}</strong> to <strong>{puzzle.end}</strong>.

@@ -1,10 +1,9 @@
 // Initializes Firebase once and exports the pieces the app needs.
-// Config values come from Vite env vars (see .env.example) — these
-// are safe to expose in the client bundle; Firebase's actual security
-// boundary is the Firestore rules (see firestore.rules), not secrecy
-// of this config.
+// Config values come from Vite env vars — these are safe to expose
+// in the client bundle; Firebase's actual security boundary is the
+// Firestore rules, not secrecy of this config.
 import { initializeApp } from 'firebase/app'
-import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -21,4 +20,3 @@ export const isFirebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseCon
 export const app = isFirebaseConfigured ? initializeApp(firebaseConfig) : null
 export const auth = isFirebaseConfigured ? getAuth(app) : null
 export const db = isFirebaseConfigured ? getFirestore(app) : null
-export const googleProvider = new GoogleAuthProvider()

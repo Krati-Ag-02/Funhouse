@@ -1,0 +1,38 @@
+.em-orb {
+  position: relative;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  margin-bottom: 1.75rem;
+  border-radius: 50%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  letter-spacing: 0.15em;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.06), transparent 60%), var(--void);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.em-orb::before {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  background: conic-gradient(from 0deg, rgba(143,121,201,0.18), rgba(63,169,138,0.14), rgba(201,103,138,0.16), rgba(143,121,201,0.18));
+  animation: mistSwirl 12s linear infinite;
+  z-index: -1;
+}
+
+@keyframes mistSwirl {
+  to { transform: rotate(360deg); }
+}
+
+.em-orb span {
+  position: relative;
+  z-index: 1;
+}

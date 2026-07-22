@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
@@ -17,7 +18,7 @@ function buildDeck(pairCount) {
 }
 
 const LEVELS = {
-  Calm: 6,   // 6 pairs = 12 cards — good for younger kids or a relaxed pace
+  Calm: 6,
   Classic: 8,
 }
 
@@ -25,8 +26,8 @@ export default function MemoryMatch() {
   const { user } = useAuth()
   const [level, setLevel] = useState('Calm')
   const [deck, setDeck] = useState(() => buildDeck(LEVELS.Calm))
-  const [flipped, setFlipped] = useState([]) // indices currently face-up (max 2)
-  const [matched, setMatched] = useState([]) // indices already matched
+  const [flipped, setFlipped] = useState([])
+  const [matched, setMatched] = useState([])
   const [moves, setMoves] = useState(0)
   const [best, setBest] = useState(getBestScore(GAME_ID))
   const [won, setWon] = useState(false)
@@ -66,7 +67,6 @@ export default function MemoryMatch() {
 
   async function finishGame(finalMoves) {
     setWon(true)
-    // Fewer moves = better; convert to a simple score (higher is better).
     const perfect = deck.length / 2
     const score = Math.max(0, 100 - (finalMoves - perfect) * 5)
     const result = await saveScore(GAME_ID, score, user)
@@ -90,10 +90,7 @@ export default function MemoryMatch() {
         <div className="ec-progress">Moves: {moves}</div>
       </div>
 
-      <div
-        className="mm-grid"
-        style={{ gridTemplateColumns: `repeat(${deck.length <= 12 ? 4 : 4}, 1fr)` }}
-      >
+      <div className="mm-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
         {deck.map((card, i) => {
           const isUp = flipped.includes(i) || matched.includes(i)
           return (
@@ -103,7 +100,10 @@ export default function MemoryMatch() {
               onClick={() => handleFlip(i)}
               aria-label={isUp ? card.icon : 'hidden card'}
             >
-              {isUp ? card.icon : '❔'}
+              <div className="mm-card-inner">
+                <div className="mm-face mm-face-back" />
+                <div className="mm-face mm-face-front">{card.icon}</div>
+              </div>
             </button>
           )
         })}
@@ -111,6 +111,7 @@ export default function MemoryMatch() {
 
       {won && (
         <div className="ec-results">
+          <Confetti />
           <h2>Solved in {moves} moves!</h2>
           <p>Best score: {best}</p>
           <button className="btn-primary" onClick={() => newGame(level)}>Play again</button>

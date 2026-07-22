@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import GameShell from '../../components/GameShell.jsx'
+import Confetti from '../../components/Confetti.jsx'
 import { saveScore, getBestScore } from '../../services/scoreService.js'
 import { useAuth } from '../../services/AuthContext.jsx'
 import '../../styles/quiz-shared.css'
@@ -7,10 +8,10 @@ import './SignalTrace.css'
 
 const GAME_ID = 'signal-trace'
 const PADS = [
-  { id: 0, color: '#6C64E8', freq: 329.6 },
-  { id: 1, color: '#2DD4BF', freq: 392.0 },
-  { id: 2, color: '#F0648C', freq: 440.0 },
-  { id: 3, color: '#F5A623', freq: 523.3 },
+  { id: 0, color: '#8F79C9', freq: 329.6 },
+  { id: 1, color: '#3FA98A', freq: 392.0 },
+  { id: 2, color: '#C9678A', freq: 440.0 },
+  { id: 3, color: '#D6A24C', freq: 523.3 },
 ]
 
 function useBeep() {
@@ -45,6 +46,7 @@ export default function SignalTrace() {
   const [activePad, setActivePad] = useState(null)
   const [phase, setPhase] = useState('idle') // idle | playing | input | lost
   const [best, setBest] = useState(getBestScore(GAME_ID))
+  const [celebrate, setCelebrate] = useState(0)
   const beep = useBeep()
 
   const level = sequence.length
@@ -92,7 +94,7 @@ export default function SignalTrace() {
     }
 
     if (playerStep + 1 === sequence.length) {
-      // Round complete — extend the sequence
+      setCelebrate((c) => c + 1)
       setTimeout(() => {
         setSequence((s) => [...s, Math.floor(Math.random() * PADS.length)])
         setPlayerStep(0)
@@ -106,25 +108,28 @@ export default function SignalTrace() {
   return (
     <GameShell gameId="signal-trace" best={best}>
       <div className="st-toolbar">
-        <p className="st-instructions">Watch the pattern, then repeat it. Each round adds one more signal.</p>
+        <p className="st-instructions">Watch the constellation light up, then trace it back. Each round adds one more star.</p>
         <div className="ec-progress">LEVEL {level}</div>
       </div>
 
-      <div className="st-grid">
-        {PADS.map((pad) => (
-          <button
-            key={pad.id}
-            className="st-pad"
-            style={{
-              '--pad-color': pad.color,
-              opacity: activePad === pad.id ? 1 : 0.55,
-              boxShadow: activePad === pad.id ? `0 0 24px ${pad.color}` : 'none',
-            }}
-            onClick={() => handlePadClick(pad.id)}
-            disabled={phase !== 'input'}
-            aria-label={`Signal pad ${pad.id + 1}`}
-          />
-        ))}
+      <div className="st-sky">
+        {celebrate > 0 && <Confetti key={celebrate} count={14} />}
+        <div className="st-grid">
+          {PADS.map((pad) => (
+            <button
+              key={pad.id}
+              className="st-pad"
+              style={{
+                '--pad-color': pad.color,
+                opacity: activePad === pad.id ? 1 : 0.55,
+                boxShadow: activePad === pad.id ? `0 0 26px ${pad.color}` : 'none',
+              }}
+              onClick={() => handlePadClick(pad.id)}
+              disabled={phase !== 'input'}
+              aria-label={`Star ${pad.id + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="st-status">
