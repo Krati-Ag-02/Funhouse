@@ -15,7 +15,7 @@ export default function GameShell({ gameId, best, children }) {
       <div className="game-hero" style={{ '--hero-gradient': meta.gradient || 'linear-gradient(135deg, #211A3E 0%, #14102A 100%)' }}>
         <div className="game-hero-icon">{meta.icon || '🎪'}</div>
         <h1 className="game-hero-title">{meta.title || 'Game'}</h1>
-        {meta.aiPowered && <span className="game-hero-ai">✨ AI-generated</span>}
+       
       </div>
 
       <div className="game-panel">{children}</div>
